@@ -28,7 +28,7 @@ abstract class Product implements iProduct {
         return $details;
     }
 
-    public function prepDetailsArray2() {
+    public function insertSQLArray() {
         $details = array();
         $details[0] = $this->name;
         $details[1] = $this->type;

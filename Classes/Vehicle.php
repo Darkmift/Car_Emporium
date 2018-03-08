@@ -12,14 +12,8 @@ class Vehicle extends Product implements iVehicle {
         $this->licensePlate = $licensePlate;
     }
 
-    public function addToDetailsArray() {
-        $details = $this->prepDetailsArray();
-        $details['licensePlate'] = $this->licensePlate;
-        return $details;
-    }
-
-    public function addToDetailsArray2() {
-        $details = $this->prepDetailsArray2();
+    public function addToInsertSQLArray() {
+        $details = $this->insertSQLArray();
         array_push($details, $this->licensePlate);
         unset($details[3]);
         return $details;
@@ -33,19 +27,19 @@ class Vehicle extends Product implements iVehicle {
 
 interface iVehicle {
 
-    public function addToDetailsArray();
+    public function addToInsertSQLArray();
 }
 
 echo "<hr>";
-$someCar = new Vehicle('$myshinyassname', '$type', '$price', '$date_sold', '$licensePlate');
-$someCar->prepDetailsArray2();
+$someCar = new Vehicle('MetalButt', '$type', '$price', '$date_sold', '$licensePlate');
+$someCar->insertSQLArray();
 echo '<pre>' . print_r($someCar, 1) . '</pre><hr>';
 //echo '<pre>' . print_r($someCar->prepDetailsArray(), 1) . '</pre><hr>';
-echo '<pre>' . print_r($someCar->addToDetailsArray2(), 1) . '</pre><hr>';
+echo '<pre>' . print_r($someCar->addToInsertSQLArray(), 1) . '</pre><hr>';
 echo '<hr>';
 $db = Database::getInstance()->db_insert(
         "INSERT INTO " . lcfirst(Vehicle::echoName()) .
         "(`name`, `type`,`price`,`licensePlate`) "
-        . "VALUES (?,?,?,?)", 'ssss', $someCar->addToDetailsArray2()
+        . "VALUES (?,?,?,?)", 'ssss', $someCar->addToInsertSQLArray()
 );
 
