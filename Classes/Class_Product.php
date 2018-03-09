@@ -58,6 +58,7 @@ class Product {
 
     public function read_SqlParams() {
         
+        
     }
 
     public function update_SqlParams() {
