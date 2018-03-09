@@ -1,7 +1,10 @@
+
+
+https://github.com/Darkmift/Car_Emporium
+
 ALTER TABLE product ADD price VARCHAR( 255 ) after type;
 
 ALTER TABLE product  CHANGE COLUMN price  price  VARCHAR(255) NOT NULL default '0.00';
 
 TRUNCATE TABLE `products`;
 TRUNCATE TABLE `vehicle`;
-
