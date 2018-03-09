@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2018 at 10:52 AM
+-- Generation Time: Mar 09, 2018 at 07:03 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -25,27 +25,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cars`
+-- Table structure for table `product`
 --
 
-CREATE TABLE `cars` (
+CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `color` varchar(100) NOT NULL,
-  `date created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `type` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL DEFAULT '0.00',
+  `date created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_sold` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cars`
+-- Dumping data for table `product`
 --
 
-INSERT INTO `cars` (`id`, `name`, `color`, `date created`) VALUES
-(1, 'pi4lnEpjSH', 'this', '2018-03-08 08:53:32'),
-(2, 'Neu3FoicDj', 'this', '2018-03-08 08:53:39'),
-(3, 'DYXCaQZzqj', 'this', '2018-03-08 08:53:45'),
-(4, 'peEcc3T72V', 'this', '2018-03-08 08:53:46'),
-(5, 'TUkaf4T0nj', 'this', '2018-03-08 08:53:46'),
-(6, 'vIt688d85n', 'this', '2018-03-08 08:53:46');
+INSERT INTO `product` (`id`, `name`, `type`, `price`, `date created`, `date_sold`) VALUES
+(1, 'TEST01', 'someType', '$price', '2018-03-09 15:31:17', '0000-00-00 00:00:00'),
+(2, 'TEST01', 'someType', '$price', '2018-03-09 15:36:30', '0000-00-00 00:00:00'),
+(3, 'TEST02', 'someType', '$price', '2018-03-09 16:03:24', '0000-00-00 00:00:00'),
+(4, 'TEST03', 'someType', '$price', '2018-03-09 16:08:28', '0000-00-00 00:00:00'),
+(5, 'TEST04', 'someType', '$price', '2018-03-09 16:15:43', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -68,22 +69,26 @@ CREATE TABLE `vehicle` (
 --
 
 INSERT INTO `vehicle` (`id`, `name`, `type`, `price`, `date_created`, `date_sold`, `licensePlate`) VALUES
-(1, 'cuntzu', 'Vehicle', '1.99', '2018-03-08 09:12:13', '0000-00-00 00:00:00', '012-34-589:IL'),
-(3, 'your cuntie ass mom', 'Vehicle', '1.99', '2018-03-08 09:14:42', '0000-00-00 00:00:00', '012-34-589:IL'),
-(5, 'your flappie ass papa', 'Vehicle', '1.99', '2018-03-08 09:15:58', '0000-00-00 00:00:00', '012-34-589:IL'),
-(6, 'your flappie ass SASA', 'Vehicle', '1.99', '2018-03-08 09:16:54', '0000-00-00 00:00:00', '012-34-589:IL'),
-(7, 'shababi', 'Vehicle', '1.99', '2018-03-08 09:18:35', '0000-00-00 00:00:00', '012-34-589:IL'),
-(8, '$myshinyassname', '$type', '$price', '2018-03-08 09:35:09', '0000-00-00 00:00:00', '$licensePlate'),
-(9, 'MetalButt', '$type', '$price', '2018-03-08 09:52:03', '0000-00-00 00:00:00', '$licensePlate');
+(1, 'TEST01', 'someType', '$price', '2018-03-09 15:45:31', '0000-00-00 00:00:00', NULL),
+(2, 'TEST02', 'someType', '$price', '2018-03-09 16:03:24', '0000-00-00 00:00:00', NULL),
+(3, 'TEST03', 'someType', '$price', '2018-03-09 16:08:28', '0000-00-00 00:00:00', NULL),
+(4, 'TEST04', 'someType', '$price', '2018-03-09 16:15:43', '0000-00-00 00:00:00', NULL),
+(5, 'TEST05', 'someType', '$price', '2018-03-09 16:29:15', '0000-00-00 00:00:00', NULL),
+(6, 'TEST06', 'someType', '$price', '2018-03-09 16:33:25', '0000-00-00 00:00:00', NULL),
+(7, 'TEST07', 'someType', '$price', '2018-03-09 16:37:56', '0000-00-00 00:00:00', NULL),
+(8, 'TEST08', 'someType', '$price', '2018-03-09 16:57:59', '0000-00-00 00:00:00', NULL),
+(9, '', '', '', '2018-03-09 17:12:27', '0000-00-00 00:00:00', NULL),
+(10, 'someType', '$price', '$date_sold', '2018-03-09 17:28:04', '0000-00-00 00:00:00', 'TEST10'),
+(11, 'someType', '$price', '$date_sold', '2018-03-09 17:30:17', '0000-00-00 00:00:00', 'TEST11');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cars`
+-- Indexes for table `product`
 --
-ALTER TABLE `cars`
+ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
@@ -100,16 +105,16 @@ ALTER TABLE `vehicle`
 --
 
 --
--- AUTO_INCREMENT for table `cars`
+-- AUTO_INCREMENT for table `product`
 --
-ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicle`
 --
 ALTER TABLE `vehicle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
