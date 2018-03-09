@@ -1,13 +1,16 @@
 <?php
 
-abstract class Product implements iProduct {
+
+/* abstract */
+
+class Product {
 
     protected $name;
     protected $type;
     protected $price;
     protected $date_sold;
 
-    //protected $table;
+//protected $table;
     public function getName() {
         return $this->name;
     }
@@ -19,15 +22,6 @@ abstract class Product implements iProduct {
         $this->date_sold = $date_sold;
     }
 
-    public function prepDetailsArray() {
-        $details = array();
-        $details['name'] = $this->name;
-        $details['type'] = $this->type;
-        $details['price'] = $this->price;
-        $details['date_sold'] = $this->date_sold;
-        return $details;
-    }
-
     public function insertSQLArray() {
         $details = array();
         $details[0] = $this->name;
@@ -37,23 +31,41 @@ abstract class Product implements iProduct {
         return $details;
     }
 
-    function creationStatement() {
-        return "You made a " . __CLASS__ . "<hr>";
+    function returnClassType() {
+        //return __CLASS__;
+        return get_called_class();
     }
 
-    public function prepStatement() {
-        $statement = $this->mysqli->prepare(
-                "INSERT INTO " . __CLASS__
-                . "(`name`,`type`,`price`,`date_inserted`, `date_sold`)"
-                . " VALUES (?,?,?,?,?)");
-        $statement_bind = bind_param(array('s', 's', 's', 's', 's'), $this->name, $this->type, $this->price, $this->date_sold);
-        $statementData = array($statement, $statement_bind);
-        return $statementData;
+    public function create_SqlParams() {
+        $columns = array_keys(get_class_vars(get_class($this)));
+        $string = '';
+        $queryValues = '';
+        $types = '';
+        for ($index = 0; $index < count($columns); $index++) {
+            $string .= $columns[$index] . ',';
+            $queryValues .= "?,";
+            $types .= 's';
+        }
+        $queryString = "INSERT INTO " .
+                lcfirst($this->returnClassType()) .
+                "(" . substr($string, 0, -1) . ") " .
+                "VALUES (" . substr($queryValues, 0, -1) . ")";
+//        $bindParamString = $this->insertSQLArray();
+//        echo 'query String; ' . $queryString . "<hr>";
+//        echo 'types: ' . $types . "<hr>";
+        return array($queryString, $types);
     }
 
-}
+    public function read_SqlParams() {
+        
+    }
 
-interface iProduct {
+    public function update_SqlParams() {
+        
+    }
 
-    public function prepDetailsArray();
+    public function sold_SqlParams() {
+        
+    }
+
 }

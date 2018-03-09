@@ -36,33 +36,11 @@ class Database implements InsertInterface {
         }
         $statement = $this->mysqli->prepare($queryString);
         $statement->bind_param($types, ...$bindParamString);
-        //echo '<pre>' . print_r(debug_backtrace(), 1) . '</pre>';
+
         if (!$statement->execute()) {
+       
             echo "Execute failed: (" . $statement->errno . ") " . $statement->error;
         }
     }
 
 }
-
-interface InsertInterface {
-
-    public function db_insert($queryString, $types, array $bindParamString);
-}
-
-function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
-
-//
-////
-//$db = Database::getInstance()->db_insert(
-//        "INSERT INTO `cars`(`name`, `color`) VALUES (?,?)", 'ss', array(generateRandomString(), 'this')
-//);
-
-
