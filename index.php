@@ -8,12 +8,16 @@ include 'Classes/Class_Vehicle.php';
 interface iVehicle {
 
     public function addToInsertSQLArray();
+
+    public static function read_SqlParams($param);
 }
 
 //db interface
 interface InsertInterface {
 
     public function db_insert($queryString, $types, array $bindParamString);
+
+    public function db_fetch($queryString);
 }
 
 //////
@@ -45,11 +49,23 @@ interface InsertInterface {
 //$SSSS = new Vehicle('$name', '$type', '$price', '$date_sold', '$licensePlate');
 //echo $SSSS->returnClassType();
 //////////
-$someProduct = new Product('TEST03', 'someType', '$price', '$date_sold');
-$injectarray = $someProduct->create_SqlParams();
-$db = Database::getInstance();
-$db->db_insert($injectarray[0], $injectarray[1], $someProduct->insertSQLArray());
+//$someProduct = new Product('TEST04', 'someType', '$price', '$date_sold');
+//$injectarray = $someProduct->create_SqlParams();
+//$db = Database::getInstance();
+//$db->db_insert($injectarray[0], $injectarray[1], $someProduct->insertSQLArray());
 /////////
-$someVehicle = new Vehicle('TEST03', 'someType', '$price', '$date_sold', '$licensePlate');
-$injectarray = $someVehicle->create_SqlParams();
-$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->insertSQLArray());
+//$db = Database::getInstance();
+//$someVehicle = new Vehicle('TEST11', 'someType', '$price', '$date_sold', '$licensePlate');
+//$injectarray = $someVehicle->create_SqlParams();
+//$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
+///////////
+$DDD = new Vehicle('$name', '$type', '$price', '$date_sold', '$licensePlate');
+echo 'keys: ';
+print_r($DDD->returnClassKeys());
+echo '<hr>';
+echo 'params : ';
+print_r($DDD->addToInsertSQLArray());
+///////////
+//$db = Database::getInstance();
+//$someVehicle = new Vehicle('TEST10', 'someType', '$price', '$date_sold', '$licensePlate');
+//$db->db_fetch(Vehicle::read_SqlParams('All'));

@@ -1,9 +1,6 @@
 <?php
 
-
-/* abstract */
-
-class Product {
+abstract class Product {
 
     protected $name;
     protected $type;
@@ -36,29 +33,35 @@ class Product {
         return get_called_class();
     }
 
+    function returnClassKeys() {
+        return array_keys(get_class_vars(get_class($this)));
+    }
+
     public function create_SqlParams() {
-        $columns = array_keys(get_class_vars(get_class($this)));
-        $string = '';
+        $columns = $this->returnClassKeys();
+        $column_names = '';
         $queryValues = '';
         $types = '';
         for ($index = 0; $index < count($columns); $index++) {
-            $string .= $columns[$index] . ',';
+            $column_names .= $columns[$index] . ',';
             $queryValues .= "?,";
             $types .= 's';
         }
         $queryString = "INSERT INTO " .
                 lcfirst($this->returnClassType()) .
-                "(" . substr($string, 0, -1) . ") " .
+                "(" . substr($column_names, 0, -1) . ") " .
                 "VALUES (" . substr($queryValues, 0, -1) . ")";
-//        $bindParamString = $this->insertSQLArray();
-//        echo 'query String; ' . $queryString . "<hr>";
-//        echo 'types: ' . $types . "<hr>";
         return array($queryString, $types);
     }
 
-    public function read_SqlParams() {
-        
-        
+    public static function read_SqlParams($param) {
+        $queryString = '';
+        if ($param === 'All') {
+            $queryString = "SELECT * FROM " . lcfirst(self::returnClassType());
+        } else {
+            $queryString = "SELECT * FROM " . lcfirst(self::returnClassType()) . " WHERE `name`='$this->name'";
+        }
+        return $queryString;
     }
 
     public function update_SqlParams() {

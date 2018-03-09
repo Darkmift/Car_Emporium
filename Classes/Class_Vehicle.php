@@ -2,7 +2,7 @@
 
 class Vehicle extends Product implements iVehicle {
 
-    private $licensePlate;
+    protected $licensePlate;
 
     function __construct($name, $type, $price, $date_sold, $licensePlate) {
         parent::__construct($name, $type, $price, $date_sold);
@@ -11,7 +11,8 @@ class Vehicle extends Product implements iVehicle {
 
     public function addToInsertSQLArray() {
         $details = $this->insertSQLArray();
-        array_push($details, $this->licensePlate);
+        //array_push($details, $this->licensePlate);
+        $details[count($details)] = $this->licensePlate;
         return $details;
     }
 

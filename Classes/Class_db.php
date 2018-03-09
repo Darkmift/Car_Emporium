@@ -31,16 +31,42 @@ class Database implements InsertInterface {
     }
 
     public function db_insert($queryString, $types, array $bindParamString) {
-        if (mysqli_connect_errno($this->mysqli)) {
+        $conn = $this->db_connect();
+        if ($conn->connect_error) {
             die("Failed to connect to MySQL: " . mysqli_connect_error());
         }
         $statement = $this->mysqli->prepare($queryString);
         $statement->bind_param($types, ...$bindParamString);
 
         if (!$statement->execute()) {
-       
+
             echo "Execute failed: (" . $statement->errno . ") " . $statement->error;
         }
+        $conn->close();
+    }
+
+    public function db_fetch($queryString) {
+        $conn = $this->db_connect();
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $result = $conn->query($queryString);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $rowString = '';
+                foreach ($row as $key => $value) {
+                    $rowString .= $key . ' : ' . $value . ' .';
+                }
+                echo substr($rowString, 0, -1) . "<br>";
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
     }
 
 }
