@@ -45,7 +45,7 @@ class Database implements InsertInterface {
         $conn->close();
     }
 
-    public function db_fetch($queryString) {
+    public function db_fetch($queryString, $action) {
         $conn = $this->db_connect();
         // Check connection
         if ($conn->connect_error) {
@@ -53,20 +53,40 @@ class Database implements InsertInterface {
         }
 
         $result = $conn->query($queryString);
-
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while ($row = $result->fetch_assoc()) {
-                $rowString = '';
-                foreach ($row as $key => $value) {
-                    $rowString .= $key . ' : ' . $value . ' .';
-                }
-                echo substr($rowString, 0, -1) . "<br>";
+        ///
+        if ($action === 'UPDATE') {
+            if ($conn->affected_rows > 0) {
+                echo "ok";
+            } else {
+                printf("Affected rows (UPDATE): %d\n", $conn->affected_rows);
             }
-        } else {
-            echo "0 results";
         }
-        $conn->close();
+        ///
+        if ($action === 'DELETE') {
+            if ($conn->affected_rows > 0) {
+                echo "ok";
+            } else {
+                printf("Affected rows (UPDATE): %d\n", $conn->affected_rows);
+            }
+        }
+        ///
+        if ($action === 'SELECT') {
+            if ($result->num_rows > 0) {
+                // output data of each row
+                echo "Selected:<br><br>";
+                while ($row = $result->fetch_assoc()) {
+                    $rowString = '';
+                    foreach ($row as $key => $value) {
+                        $rowString .= $key . ' : ' . $value . ' .';
+                    }
+                    echo substr($rowString, 0, -1) . "<br>";
+                }
+                echo "<hr>";
+            } else {
+                echo "0 results on fetch";
+            }
+            $conn->close();
+        }
     }
 
 }

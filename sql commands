@@ -8,3 +8,20 @@ ALTER TABLE product  CHANGE COLUMN price  price  VARCHAR(255) NOT NULL default '
 
 TRUNCATE TABLE `products`;
 TRUNCATE TABLE `vehicle`;
+
+
+UPDATE `vehicle` SET 
+`id`=[value-1],
+`name`=[value-2],
+`type`=[value-3],
+`price`=[value-4],
+`date_created`=[value-5],
+`date_sold`=[value-6],
+`licensePlate`=[value-7]
+
+
+UPDATE `vehicle` SET `price`='30.00' WHERE `price`='$price'
+
+delete from vehicle 
+where price = 1 
+limit 1

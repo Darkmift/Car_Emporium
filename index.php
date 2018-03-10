@@ -7,9 +7,15 @@ include 'Classes/Class_Vehicle.php';
 //vehicle interface
 interface iVehicle {
 
+    //fetch query for insert to db
     public function addToInsertSQLArray();
 
+    //fetch query for select from db
     public static function read_SqlParams($param);
+
+    public static function update_SqlParams($where_Column, $param_to_update, $param_update_value);
+
+    public static function delete_SqlParams($where_Column, $param_to_delete);
 }
 
 //db interface
@@ -17,7 +23,7 @@ interface InsertInterface {
 
     public function db_insert($queryString, $types, array $bindParamString);
 
-    public function db_fetch($queryString);
+    public function db_fetch($queryString, $action);
 }
 
 //////
@@ -59,14 +65,29 @@ interface InsertInterface {
 //$injectarray = $someVehicle->create_SqlParams();
 //$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
 ///////////
-$DDD = new Vehicle('$name', '$type', '$price', '$date_sold', '$licensePlate');
-echo 'keys: ';
-print_r($DDD->returnClassKeys());
-echo '<hr>';
-print_r($DDD->returnClassKeysThis());
-echo 'params : ';
+//$DDD = new Vehicle('$name', '$type', '$price', '$date_sold', '$licensePlate');
+//echo '<hr>';
+//$DDD->SortKeys();
 //print_r($DDD->addToInsertSQLArray());
 ///////////
 //$db = Database::getInstance();
-//$someVehicle = new Vehicle('TEST10', 'someType', '$price', '$date_sold', '$licensePlate');
+//$someVehicle = new Vehicle('TEST12', 'someType', '$price', '$date_sold', '$licensePlate');
+//$injectarray = $someVehicle->create_SqlParams();
+//$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
 //$db->db_fetch(Vehicle::read_SqlParams('All'));
+////////////
+//$db = Database::getInstance();
+//$someVehicle = new Vehicle('TEST12', 'someType', '$price', '$date_sold', '$licensePlate');
+//$injectarray = $someVehicle->create_SqlParams();
+//$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
+//$db->db_fetch(Vehicle::read_SqlParams('TEST05'));
+//////
+//$someVehicle = new Vehicle('TEST12', 'someType', '$price', '$date_sold', '$licensePlate');
+//echo '<pre>someProduct properties:' . print_r($someVehicle, 1) . '</pre><hr>';
+//
+/////
+//$db = Database::getInstance();
+//$db->db_fetch(Vehicle::update_SqlParams('price', '30.00', '350.00'), 'UPDATE');
+/////
+$db = Database::getInstance();
+$db->db_fetch(Vehicle::delete_SqlParams('id', '9'), 'DELETE');

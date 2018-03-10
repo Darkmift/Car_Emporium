@@ -33,16 +33,31 @@ abstract class Product {
         return get_called_class();
     }
 
-    function returnClassKeysThis() {
-        return array_keys(get_class_vars(get_class()));
-    }
-
-    function returnClassKeys() {
-        return array_keys(get_class_vars(get_class($this)));
+    public function SortKeys() {
+        $keysArrayThis = array_keys(get_class_vars(get_class($this)));
+        $keysArrayParent = array_keys(get_class_vars(get_class()));
+        if (count($keysArrayParent) !== count($keysArrayThis)) {
+            $nameKeyPos = array_search('name', $keysArrayThis);
+            $ParentChunk = array_slice($keysArrayThis, $nameKeyPos);
+//            echo "<br>Parent_chunk<hr>";
+//            print_r($ParentChunk);
+//            echo "<br>Child_chunk<hr>";
+            $ChildChunk = array_slice($keysArrayThis, 0, $nameKeyPos);
+//            print_r($ChildChunk);
+            $sortedKeys = $ParentChunk;
+            foreach ($ChildChunk as $key => $value) {
+                array_push($sortedKeys, $value);
+            }
+//            echo "<br>sorted<hr>";
+//            print_r($sortedKeys);
+            return $sortedKeys;
+        } else {
+            return $sortedKeys;
+        }
     }
 
     public function create_SqlParams() {
-        $columns = $this->returnClassKeys();
+        $columns = $this->SortKeys();
         $column_names = '';
         $queryValues = '';
         $types = '';
@@ -63,17 +78,25 @@ abstract class Product {
         if ($param === 'All') {
             $queryString = "SELECT * FROM " . lcfirst(self::returnClassType());
         } else {
-            $queryString = "SELECT * FROM " . lcfirst(self::returnClassType()) . " WHERE `name`='$this->name'";
+            $queryString = "SELECT * FROM " . lcfirst(self::returnClassType()) . " WHERE `name`='$param'";
         }
         return $queryString;
     }
 
-    public function update_SqlParams() {
-        
+    public static function update_SqlParams($where_Column, $param_to_update, $param_update_value) {
+        $queryString = "UPDATE " . lcfirst(self::returnClassType()) . " "
+                . "SET $where_Column = $param_update_value "
+                . "WHERE $where_Column = $param_to_update";
+        echo $queryString . "<hr>";
+        return $queryString;
     }
 
-    public function sold_SqlParams() {
-        
+    public static function delete_SqlParams($where_Column, $param_to_delete) {
+        $queryString = "delete from " . lcfirst(self::returnClassType())
+                . " where $where_Column = $param_to_delete "
+                . "limit 1";
+        echo $queryString . "<hr>";
+        return $queryString;
     }
 
 }
