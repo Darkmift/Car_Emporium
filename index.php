@@ -3,6 +3,7 @@
 include 'Classes/Class_Product.php';
 include 'Classes/Class_db.php';
 include 'Classes/Class_Vehicle.php';
+include 'Classes/Class_Product_Factory.php';
 
 //vehicle interface
 interface iVehicle {
@@ -26,8 +27,13 @@ interface InsertInterface {
     public function db_fetch($queryString, $action);
 }
 
-//////
-//////
+//factory interface
+
+interface iFactory {
+
+    public function create($Param_array);
+}
+
 //////
 //$someProduct = new Product('TEST02', 'someType', '$price', '$date_sold');
 //$someProduct->create_SqlParams();
@@ -89,5 +95,12 @@ interface InsertInterface {
 //$db = Database::getInstance();
 //$db->db_fetch(Vehicle::update_SqlParams('price', '30.00', '350.00'), 'UPDATE');
 /////
+//$db = Database::getInstance();
+//$db->db_fetch(Vehicle::delete_SqlParams('id', '9'), 'DELETE');
+////
+$factory = new Product_Factory;
+$someVehicle = $factory->create(array('Vehicle', 'TEST13', 'someType', '$price', '$date_sold', '$licensePlate'));
+echo '<pre>someProduct properties:' . print_r($someVehicle, 1) . '</pre><hr>';
 $db = Database::getInstance();
-$db->db_fetch(Vehicle::delete_SqlParams('id', '9'), 'DELETE');
+$injectarray = $someVehicle->create_SqlParams();
+$db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
