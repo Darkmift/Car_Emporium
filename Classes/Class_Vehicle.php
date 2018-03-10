@@ -3,6 +3,8 @@
 class Vehicle extends Product implements iVehicle {
 
     protected $licensePlate;
+    protected $test01;
+    protected $test02;
 
     function __construct($name, $type, $price, $date_sold, $licensePlate) {
         parent::__construct($name, $type, $price, $date_sold);

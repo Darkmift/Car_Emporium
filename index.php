@@ -63,8 +63,9 @@ $DDD = new Vehicle('$name', '$type', '$price', '$date_sold', '$licensePlate');
 echo 'keys: ';
 print_r($DDD->returnClassKeys());
 echo '<hr>';
+print_r($DDD->returnClassKeysThis());
 echo 'params : ';
-print_r($DDD->addToInsertSQLArray());
+//print_r($DDD->addToInsertSQLArray());
 ///////////
 //$db = Database::getInstance();
 //$someVehicle = new Vehicle('TEST10', 'someType', '$price', '$date_sold', '$licensePlate');

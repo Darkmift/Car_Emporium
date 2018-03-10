@@ -33,6 +33,10 @@ abstract class Product {
         return get_called_class();
     }
 
+    function returnClassKeysThis() {
+        return array_keys(get_class_vars(get_class()));
+    }
+
     function returnClassKeys() {
         return array_keys(get_class_vars(get_class($this)));
     }
