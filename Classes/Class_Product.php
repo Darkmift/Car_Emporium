@@ -83,6 +83,12 @@ abstract class Product {
         return $queryString;
     }
 
+    public static function return_id_SqlParams($param) {
+        $queryString = '';
+        $queryString = "SELECT id FROM " . lcfirst(self::returnClassType()) . " WHERE `name`='$param'";
+        return $queryString;
+    }
+
     public static function update_SqlParams($where_Column, $param_to_update, $param_update_value) {
         $queryString = "UPDATE " . lcfirst(self::returnClassType()) . " "
                 . "SET $where_Column = $param_update_value "

@@ -17,6 +17,8 @@ interface iVehicle {
     public static function update_SqlParams($where_Column, $param_to_update, $param_update_value);
 
     public static function delete_SqlParams($where_Column, $param_to_delete);
+
+    public static function return_id_SqlParams($param);
 }
 
 //db interface

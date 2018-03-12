@@ -72,30 +72,18 @@ class Database implements InsertInterface {
         ///
         if ($action === 'SELECT') {
             if ($result->num_rows > 0) {
-                return json_encode($result);
-            } else {
-                return "0 results on fetch";
-            }
-            $conn->close();
-        }
-        if ($action === 'SELECT_ID') {
-            if ($result->num_rows > 0) {
                 // output data of each row
-                $output = '';
+                echo "Selected:<br><br>";
                 while ($row = $result->fetch_assoc()) {
                     $rowString = '';
                     foreach ($row as $key => $value) {
                         $rowString .= $key . ' : ' . $value . ' .';
                     }
-                    $output .= substr($rowString, 0, -1) . "<br>";
+                    echo substr($rowString, 0, -1) . "<br>";
                 }
-                $output .= "<hr>";
-                var_dump(http_response_code(201));
-                var_dump(http_response_code());
-                return $output;
+                echo "<hr>";
             } else {
-                http_response_code(406);
-                return "0 results on fetch_id";
+                echo "0 results on fetch";
             }
             $conn->close();
         }

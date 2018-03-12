@@ -66,7 +66,7 @@ $db = Database::getInstance();
 $someVehicle = new Vehicle('TEST12', 'someType', '$price', '$date_sold', '$licensePlate');
 $injectarray = $someVehicle->create_SqlParams();
 $db->db_insert($injectarray[0], $injectarray[1], $someVehicle->addToInsertSQLArray());
-$db->db_fetch(Vehicle::read_SqlParams('TEST05'));
+$db->db_fetch(Vehicle::read_SqlParams('TEST05'),'SELECT');
 //////
 $someVehicle = new Vehicle('TEST12', 'someType', '$price', '$date_sold', '$licensePlate');
 echo '<pre>someProduct properties:' . print_r($someVehicle, 1) . '</pre><hr>';
